@@ -1,4 +1,4 @@
-const user = require('../model/User.model');
+const User = require('../model/User.model');
 const jwt = require('jsonwebtoken');
 const express = require("express");
 const {generateToken,verifyToken}=require('../utils/jwt.js');
@@ -8,11 +8,13 @@ const {generateToken,verifyToken}=require('../utils/jwt.js');
 const signUp = async(req, res, next) => {
     const {email, password, name} = req.body;
     try{
-        const userExist = await user.findOne({email});
+        console.log(email,password,name,"details for signupppppppppppppppppppppppppppppppppppp")
+        const userExist = await User.findOne({email});
         if(userExist){
             return res.status(400).json({ message:"User already exist" });
         }
-        const user =await user.create({name, email,password});
+        const user =await User.create({name, email,password});
+        console.log(user,"user createddddddddddddddddddddddddddd")
         const accesstoken = generateToken(user._id);
 
 
